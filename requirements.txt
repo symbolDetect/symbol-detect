@@ -2,7 +2,6 @@
 
 torch
 torchvision
-opencv-python
 numpy
 reportlab
 pillow
