@@ -11,6 +11,6 @@ protobuf
 tensorboard
 pandas
 seaborn
-ipython=
+ipython
 psutil
 thop
