@@ -183,11 +183,13 @@ if uploaded_file is not None:
 
         # Provide download link for the PDF
         with open("object_counts.pdf", "rb") as pdf_file:
+            pdf_bytes = pdf_file.read()
+
+        st.download_button(label="Download PDF", data=pdf_bytes, file_name="object_counts.pdf", mime="application/pdf")
+                        # Free unused memory
+
+torch.cuda.empty_cache()
            
-
-
         # st.write(f"Total Objects: {total_objects}")
         # st.write(f"Detected Objects: {detected_objects}")
         # st.write(f"Detection Percentage: {detection_percentage:.2f}%")
-
-        
