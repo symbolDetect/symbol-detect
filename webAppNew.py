@@ -79,14 +79,14 @@ if uploaded_file is not None:
 
         # Class names from data.yaml
         class_names = ['10000-lm-low-bay-light', '10A-1way-1gang-switch', '10A-2way-1gang-switch', '1250-lm-led',
-               '13A-socket-outlet-for-higher-level', '13A-twin-table-top-mounted-socket-outlet',
-               '13A-wall-mounted-socket-outlet', '13A-wall-mounted-twin-socket-outlet', '1400mm-sweap-fan',
-               '2345-lm-led-light', '3250-lm-led', '3800-lm-1200mm-led', '500-lm-law-bay-led', '600-lm-led',
-               '600-lm-low-bay-led', '910-Lm-led-down-light', '910-lm-wall-mounted-led', '950-lm-led', 'MCCB',
-               'energency-light', 'isolator-with-enclosure', 'metal-distribution-boad', 'universal-fan-controller',
-               'wall-fan']  # Update with your class names
+                       '13A-socket-outlet-for-higher-level', '13A-twin-table-top-mounted-socket-outlet',
+                       '13A-wall-mounted-socket-outlet', '13A-wall-mounted-twin-socket-outlet', '1400mm-sweap-fan',
+                       '2345-lm-led-light', '3250-lm-led', '3800-lm-1200mm-led', '500-lm-law-bay-led', '600-lm-led',
+                       '600-lm-low-bay-led', '910-Lm-led-down-light', '910-lm-wall-mounted-led', '950-lm-led', 'MCCB',
+                       'energency-light', 'isolator-with-enclosure', 'metal-distribution-boad', 'universal-fan-controller',
+                       'wall-fan']  # Update with your class names
 
-       # Process tiles
+        # Process tiles
         for y in range(0, img0.shape[0], stride):
             for x in range(0, img0.shape[1], stride):
                 # Extract tile
@@ -108,7 +108,6 @@ if uploaded_file is not None:
                 progress_counter += 1
                 progress_bar.progress(min(int(progress_counter * 100 / (img0.shape[0] * img0.shape[1] / (stride ** 2))), 100))
 
-
                 # Process detections
                 if pred is not None and len(pred):
                     for det in pred:
@@ -116,47 +115,38 @@ if uploaded_file is not None:
                         bbox = det[:4]  # Extract bounding box coordinates
                         bbox[0::2] = (bbox[0::2] * tile_size / img_size + x).clip(min=0, max=combined_img.shape[1])  # Scale and adjust x-coordinates
                         bbox[1::2] = (bbox[1::2] * tile_size / img_size + y).clip(min=0, max=combined_img.shape[0])  # Scale and adjust y-coordinates
-                        bbox = bbox.round().astype(np.int)  # Round and convert to integer
+                        bbox = bbox.round().astype(np.int32)  # Round and convert to integer
                         label = int(det[-1])
                         obj_counts[label] += 1  # Increment count for detected object
-                                
+
                         # Draw bounding box on combined image
                         cv2.rectangle(combined_img, (bbox[0], bbox[1]), (bbox[2], bbox[3]), (0, 255, 0), 2)
-                        
+
                         # Overlay text with class name, ID, and count
                         class_name = class_names[label] if label < len(class_names) else 'Unknown'
                         text = f'{class_name} ({label}): {obj_counts[label]}'
-                        
+
                         # Reduce text size
                         font_scale = 0.5
                         thickness = 1
                         text_size = cv2.getTextSize(text, cv2.FONT_HERSHEY_SIMPLEX, font_scale, thickness)[0]
-                        
+
                         # Draw text background rectangle
                         cv2.rectangle(combined_img, (bbox[0], bbox[1] - text_size[1]), (bbox[0] + text_size[0], bbox[1]), (0, 255, 0), cv2.FILLED)
-                        
+
                         # Overlay text on the image
                         cv2.putText(combined_img, text, (bbox[0], bbox[1] - 5), cv2.FONT_HERSHEY_SIMPLEX, font_scale, (255, 255, 255), thickness)
 
-
-
         # Display object counts and percentage
-        # st.subheader("Object Counts")
         total_objects = sum(obj_counts.values())
         detected_objects = len(pred) if pred is not None else 0
         detection_percentage = (detected_objects / total_objects) * 100 if total_objects > 0 else 0
-
-        
-
 
         # Display the combined image with detections and text overlay
         st.subheader("Combined Image with Detections")
         st.image(combined_img, channels="BGR")
 
-
-
-
-            # Display object counts
+        # Display object counts
         st.subheader("Object Counts")
         for label, count in obj_counts.items():
             class_name = class_names[label] if label < len(class_names) else 'Unknown'
@@ -171,15 +161,13 @@ if uploaded_file is not None:
 
         table = Table(data)
         table.setStyle(TableStyle([('BACKGROUND', (0, 0), (-1, 0), (0, 0, 0)),
-                                ('TEXTCOLOR', (0, 0), (-1, 0), (1, 1, 1)),  # White text color
-                                ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
-                                ('FONTNAME', (0, 0), (-1, -1), 'Helvetica-Bold'),
-                                ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
-                                ('BACKGROUND', (0, 1), (-1, -1), (0.96, 0.96, 0.96))]))  # Light gray background
+                                   ('TEXTCOLOR', (0, 0), (-1, 0), (1, 1, 1)),  # White text color
+                                   ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+                                   ('FONTNAME', (0, 0), (-1, -1), 'Helvetica-Bold'),
+                                   ('BOTTOMPADDING', (0, 0), (-1, 0), 12),
+                                   ('BACKGROUND', (0, 1), (-1, -1), (0.96, 0.96, 0.96))]))  # Light gray background
 
-        # doc.build([table])
-
-       # Build the PDF with the table
+        # Build the PDF with the table
         elements = [table]
 
         # Add the combined_img to the PDF
@@ -195,12 +183,8 @@ if uploaded_file is not None:
 
         # Provide download link for the PDF
         with open("object_counts.pdf", "rb") as pdf_file:
-            pdf_bytes = pdf_file.read()
+           
 
-        st.download_button(label="Download PDF", data=pdf_bytes, file_name="object_counts.pdf", mime="application/pdf")
-                        # Free unused memory
-
-torch.cuda.empty_cache()
 
         # st.write(f"Total Objects: {total_objects}")
         # st.write(f"Detected Objects: {detected_objects}")
