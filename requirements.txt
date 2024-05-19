@@ -1,7 +1,13 @@
+# For Torch GPU
+
+-i https://download.pytorch.org/whl/cu116
+
+torch==1.13.1+cu116
+torchvision==0.14.1+cu116
+
 streamlit==1.34.0
 opencv-python==4.9.0.80
 numpy==1.23.5
-torch==1.13.1+cu116
 reportlab==4.2.0
 pillow==10.3.0
 matplotlib==3.8.4
