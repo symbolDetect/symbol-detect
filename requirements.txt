@@ -1,27 +1,23 @@
-# For Torch GPU
-
 -i https://download.pytorch.org/whl/cu116
 
 torch
 torchvision
-
-streamlit
-opencv-python==4.9.0.80
-numpy==1.23.5
-reportlab==4.2.0
-pillow==10.3.0
-matplotlib==3.8.4
-PyYAML==6.0.1
-requests==2.31.0
-scipy==1.13.0
-tqdm==4.66.4
-protobuf==3.20.0
-tensorboard==2.16.2
-pandas==2.2.2
-seaborn==0.13.2
-ipython==8.18.1
-psutil==5.9.8
-thop==0.1.1.post2209072238
+opencv-python
+numpy
+reportlab
+pillow
+matplotlib
+PyYAML
+requests
+scipy
+tqdm
+protobuf
+tensorboard
+pandas
+seaborn
+ipython
+psutil
+thop
 
 # Optional dependencies
 # coremltools>=4.1  # CoreML export
