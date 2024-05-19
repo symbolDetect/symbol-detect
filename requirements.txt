@@ -3,7 +3,7 @@
 torch
 torchvision
 numpy
-reportlab
+reportlab==4.2.0
 pillow
 matplotlib
 PyYAML
