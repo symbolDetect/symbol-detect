@@ -1,6 +1,21 @@
 # For Torch GPU
 
--i https://download.pytorch.org/whl/cu116
+# -i https://download.pytorch.org/whl/cu116
 
-torch==1.13.1+cu116
-torchvision==0.14.1+cu116
+# torch==1.13.1+cu116
+# torchvision==0.14.1+cu116
+numpy
+opencv-python-headless
+tqdm
+pyyaml
+matplotlib
+requests
+scipy
+protobuf
+tensorboard
+pandas
+seaborn
+ipython
+psutil
+thop
+reportlab
