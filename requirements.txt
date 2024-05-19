@@ -5,3 +5,12 @@ opencv-python-headless
 tqdm
 pyyaml
 matplotlib
+requests
+scipy
+protobuf
+tensorboard
+pandas
+seaborn
+ipython=
+psutil
+thop
